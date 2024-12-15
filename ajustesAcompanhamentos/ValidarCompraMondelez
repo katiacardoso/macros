@@ -1,0 +1,27 @@
+Sub ValidarCompraMondelez()
+    Dim wsDados As Worksheet
+    Dim wsControle As Worksheet
+    Dim ultimaLinha As Long
+    Dim i As Long
+
+    ' Define as abas
+    Set wsDados = ThisWorkbook.Sheets("0.05.09 Cliente - Caixa")
+    Set wsControle = ThisWorkbook.Sheets("Controle")
+
+    ' Encontra a última linha com dados na aba "Dados"
+    ultimaLinha = wsDados.Cells(Rows.Count, "C").End(xlUp).Row
+
+    ' Loop para cada linha
+    For i = 2 To ultimaLinha
+        ' Verifica se existe algum produto Mondelez na linha
+        If WorksheetFunction.CountIfs(wsDados.Range("D" & i & ":D" & i), "*Mondelez*") > 0 Then
+            ' Se encontrou, escreve "OK" na aba "Controle"
+            wsControle.Cells(i, "E").Value = "OK"
+        Else
+            ' Se não encontrou, escreve "Não" na aba "Controle"
+            wsControle.Cells(i, "E").Value = "Não"
+        End If
+    Next i
+
+    MsgBox "Validação concluída!"
+End Sub
