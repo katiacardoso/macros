@@ -1,0 +1,43 @@
+Sub ContarCompradoresMondelez()
+    Dim wb As Workbook
+    Dim ws As Worksheet
+    Dim lastRow As Long
+    Dim dictClientes As Object
+    Dim clienteAtual As String
+    Dim dataAtual As Date
+    Dim produtoAtual As String
+
+    ' Abre o arquivo (ajuste o caminho se necessário)
+    Set wb = ThisWorkbook.Sheets("03.05.09 Cliente - Caixa")
+    Set ws = ThisWorkbook.Sheets("Controle")
+
+    ' Encontra a última linha com dados
+    lastRow = ws.Cells(Rows.Count, "A").End(xlUp).Row
+
+    ' Cria um dicionário para armazenar os clientes e suas visitas
+    Set dictClientes = CreateObject("Scripting.Dictionary")
+
+    ' Itera por cada linha
+    For i = 2 To lastRow
+        clienteAtual = ws.Cells(i, "A").Value
+        dataAtual = ws.Cells(i, "B").Value
+        produtoAtual = ws.Cells(i, "C").Value
+
+        ' Se o produto for Mondelez, adiciona ou incrementa o contador de visitas
+        If InStr(1, produtoAtual, "Mondelez", vbTextCompare) > 0 Then
+            If Not dictClientes.Exists(clienteAtual) Then
+                dictClientes.Add clienteAtual, 1
+            Else
+                dictClientes(clienteAtual) = dictClientes(clienteAtual) + 1
+            End If
+        End If
+    Next i
+
+    ' Exibe o resultado (ajuste a célula onde deseja mostrar o resultado)
+    Range("F2").Value = "Total de compradores únicos de Mondelez: " & dictClientes.Count
+
+    wb.Close SaveChanges:=False ' Fecha o arquivo sem salvar alterações
+    Set wb = Nothing
+    Set ws = Nothing
+    Set dictClientes = Nothing
+End Sub
