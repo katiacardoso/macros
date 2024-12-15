@@ -1,0 +1,30 @@
+Sub CopiarEColarValores()
+    ' Declaração das abas
+    Dim wsBase As Worksheet, wsControle As Worksheet
+
+    ' Define as abas
+    Set wsBase = ThisWorkbook.Sheets("baseClientes")
+    Set wsControle = ThisWorkbook.Sheets("Controle")
+
+    ' Limpa a coluna A da aba "Controle" (opcional)
+    wsControle.Range("A:A").ClearContents
+    wsControle.Range("B:B").ClearContents
+    wsControle.Range("C:C").ClearContents
+
+    ' Copia e cola os valores como numéricos
+    wsBase.Range("A:A").Copy
+    wsControle.Range("A1").PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    
+    wsBase.Range("C:C").Copy
+    wsControle.Range("c1").PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+
+
+    wsBase.Range("J:J").Copy
+    wsControle.Range("b1").PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+    ' Converte os valores da coluna A para números
+    wsControle.Range("A:A").Value = wsControle.Range("A:A").Value
+
+    ' Formata como número geral (opcional)
+    wsControle.Range("A:A").NumberFormat = "General"
+
+End Sub
