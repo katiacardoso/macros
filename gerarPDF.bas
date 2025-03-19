@@ -21,9 +21,9 @@ Sub ExportarPDFPorSetor()
     Dim ultimaLinha As Long
     ultimaLinha = ws.Cells(ws.Rows.Count, "F").End(xlUp).Row
     
-    ' Percorrer a coluna F e armazenar setores ï¿½nicos dentro do intervalo definido
+    ' Percorrer a coluna F e armazenar setores únicos dentro do intervalo definido
     For Each setor In ws.Range("F2:F" & ultimaLinha)
-        If IsNumeric(setor.Value) Then ' Verifica se ï¿½ um nï¿½mero
+        If IsNumeric(setor.Value) Then ' Verifica se é um número
             If setor.Value >= setorMin And setor.Value <= setorMax Then
                 If Not setores.exists(CStr(setor.Value)) Then
                     setores.Add CStr(setor.Value), Nothing
@@ -32,7 +32,7 @@ Sub ExportarPDFPorSetor()
         End If
     Next setor
     
-    ' Caminho da pasta de Documentos do usuï¿½rio
+    ' Caminho da pasta de Documentos do usuário
     caminho = Environ("USERPROFILE") & "\Documents\"
     
     ' Filtrar e gerar PDFs apenas para os setores do intervalo
@@ -62,5 +62,5 @@ Sub ExportarPDFPorSetor()
     Application.ScreenUpdating = True
     Application.Calculation = xlCalculationAutomatic
     
-    MsgBox "Exportação concluídda! Os PDFs estï¿½o na pasta Documentos.", vbInformation
+    MsgBox "Exportação concluída! Os PDFs estão na pasta Documentos.", vbInformation
 End Sub
